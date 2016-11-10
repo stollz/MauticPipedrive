@@ -72,7 +72,6 @@ class PipedriveController extends CommonController
 			$person['name'] = $name;
 			$person['email'] = $email;
 			$person['phone'] = $phone;
-			$person['422b3de6c84722ac6b4894e9564dc8050337ec95'] = $salutation;//salutation
 			$person['90ef89ba6bb8edd624667e3a18144d3dcfb9fdb9'] = $address;//Address
 			$person['9bc9b85f8073812eeeb2519850b11499292b1afe'] = $leadid; //mautic id
 
@@ -99,6 +98,7 @@ class PipedriveController extends CommonController
 			else{
 				$salutation="";
 			}
+			$person['422b3de6c84722ac6b4894e9564dc8050337ec95'] = $salutation;//salutation
 
 			try{
 				$leadMP = $em->getRepository("MauticPlugin\PipedriveBundle\Entity\PipedrivePlugin");
@@ -130,7 +130,8 @@ class PipedriveController extends CommonController
 							'due_date' => date('Y-m-d'), //configure as per your choice
 							'org_id'=> $data['data'][0]['details']['org_id']
 						);
-						echo "Lead Exists.. creating activity..</br>";
+						echo "Lead Exists..Updating Lead.. creating activity..</br>";
+						$person = $pipedrive->persons()->update($data['data'][0]['id'],$person);
 						$activity = $pipedrive->activities()->add($activity);
 						echo "Activity: ".$activity['data']['id']."<br/>";
 					}
