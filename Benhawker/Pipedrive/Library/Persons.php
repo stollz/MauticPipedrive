@@ -1,0 +1,122 @@
+<?php namespace MauticPlugin\PipedriveBundle\Benhawker\Pipedrive\Library;
+
+use MauticPlugin\PipedriveBundle\Benhawker\Pipedrive\Exceptions\PipedriveMissingFieldError;
+use MauticPlugin\PipedriveBundle\Benhawker\Pipedrive\Pipedrive;
+/**
+ * Pipedrive Persons Methods
+ *
+ * Persons are your contacts, the customers you are doing Deals with.
+ * Each Person can belong to an Organization.
+ * Persons should not be confused with Users.
+ *
+ */
+class Persons
+{
+    /**
+     * Hold the pipedrive cURL session
+     * @var \Benhawker\Pipedrive\Library\Curl Curl Object
+     */
+    protected $curl;
+
+    /**
+     * Initialise the object load master class
+     */
+    public function __construct($master)
+    {
+        //associate curl class
+        $this->curl = $master->curl();
+    }
+
+    /**
+     * Returns a person
+     *
+     * @param  int   $id pipedrive persons id
+     * @return array returns detials of a person
+     */
+    public function getById($id)
+    {
+        return $this->curl->get('persons/' . $id);
+    }
+
+    /**
+     * Returns a person / people
+     *
+     * @param  string $name pipedrive persons name
+     * @return array  returns detials of a person
+     */
+    public function getByName($name)
+    {
+        return $this->curl->get('persons/find', array('term' => $name));
+    }
+
+    /**
+     * Lists deals associated with a person.
+     *
+     * @param  array $data (id, start, limit)
+     * @return array deals
+     */
+    public function deals(array $data)
+    {
+        //if there is no id set throw error as it is a required field
+        if (!isset($data['id'])) {
+            throw new PipedriveMissingFieldError('You must include the "id" of the person when getting deals');
+        }
+
+        return $this->curl->get('persons/' . $data['id'] . '/deals');
+    }
+
+    /**
+     * Lists products associated with a person.
+     *
+     * @param  array $data (id, start, limit)
+     * @return array products
+     */
+    public function products(array $data)
+    {
+        //if there is no id set throw error as it is a required field
+        if (!isset($data['id'])) {
+            throw new PipedriveMissingFieldError('You must include the "id" of the person when getting products');
+        }
+
+        return $this->curl->get('persons/' . $data['id'] . '/products');
+    }
+
+    /**
+     * Updates a person
+     *
+     * @param  int   $personId pipedrives person Id
+     * @param  array $data     new detials of person
+     * @return array returns detials of a person
+     */
+    public function update($personId, array $data = array())
+    {
+        return $this->curl->put('persons/' . $personId, $data);
+    }
+
+    /**
+     * Adds a person
+     *
+     * @param  array $data persons detials
+     * @return array returns detials of a person
+     */
+    public function add(array $data)
+    {
+        //if there is no name set throw error as it is a required field
+        if (!isset($data['name'])) {
+            throw new PipedriveMissingFieldError('You must include a "name" field when inserting a person');
+        }
+
+        return $this->curl->post('persons', $data);
+    }
+
+    /**
+     * Deletes a person
+     *
+     * @param  int   $personId pipedrives person Id
+     * @return array returns detials of a person
+     */
+    public function delete($personId)
+    {
+        return $this->curl->delete('persons/' . $personId);
+    }
+}
