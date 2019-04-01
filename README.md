@@ -1,4 +1,4 @@
-#Mautic Pipedrive Plugin
+# Mautic Pipedrive Plugin
 
 This plugin works with Mautic and connects contacts with pipedrive.
 Stores the mautic point based event into the pipedrive and creates contact and activity
@@ -16,7 +16,7 @@ Pipedrive Plugin: This plugin acts as a bridge between Mautic and Pipedrive. Usi
 ## Why we created it ?
 We use Mautic for our marketting campaign and Pipedrive to contact the leads generated from those campaigns, we needed a way through which we could check mautic point thrashhold and identify leads which could then be exported to PD for our call center people to contact them. So we created this plugin, it tracks any point change and sends the lead crossing a point thrashhold to PD.
 
-##Installation
+## Installation
 1. place PluginBundle directory in the plugins directory of your mautic installation.
 e.g. Linux: `~your-mautic/plugins/PipedriveBundle`
 2. go to console, clear mautic cache
@@ -92,7 +92,7 @@ The [Pipedrive API](https://developers.pipedrive.com/docs/api/v1/) key required 
 Your your id in pipedrive which becomes owner of person, org, activity created through Plugin.
 Also if you have More custom field in Pipedrive or Mautic to map together refer code documentation in the code file.
 
-####Command
+#### Command
 **PipedriveNewsletter**
 
 `const FILTER_ID = 20;`
@@ -135,7 +135,7 @@ When to Use Newsletter Cron?
 
 This cron ought to be used when you want to set some lead in Pipedrive and have to use that Lead to add that contact in mautic for sending out newsletter. You need to create a filter and configure Plugin to use this filter, see section above for the same.
 
-####Command
+#### Command
 **Pipedrive:email:sync**
 
 First set a custom field as mentioned in the sections above and use its Id to configure the plugin. This is there if you want to collect this lead in the Mautic List for some specific email sending.
