@@ -1,4 +1,4 @@
-#Mautic Pipedrive Plugin
+# Mautic Pipedrive Plugin
 
 This plugin works with Mautic and connects contacts with pipedrive.
 Stores the mautic point based event into the pipedrive and creates contact and activity
